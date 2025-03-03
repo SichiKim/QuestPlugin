@@ -1,0 +1,17 @@
+Inventories:
+  TestInventory:
+    size: 3
+    title: '테스트'
+    items: {
+      item: {
+        slot: 0,
+        id: STONE,
+        name: '&f그냥 돌',
+        lore: '&f히히'
+      }
+    }
+
+NPCs:
+  town1npc1:
+    inventory: TestInventory
+
