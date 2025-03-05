@@ -5,13 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class QuestManager {
-    private Long UID = 0L;
     private Map<UUID, List<Quest>> quests = new HashMap<>(); //UUID, QuestID
-    private static int sequence = 0;
-
-    public Long getUID() {
-        return UID;
-    }
 
     public void register(Player p, Quest q) {
         UUID uid = p.getUniqueId();
@@ -27,6 +21,11 @@ public class QuestManager {
     public List<Quest> findByUUID(UUID id) {
         return quests.get(id).stream()
                 .filter(q -> q.getUUID() == id).toList();
+    }
+
+    public Quest findById(int id, Player p) {
+        return quests.get(p.getUniqueId()).stream()
+                .filter(q -> q.getId() == id).findFirst().orElse(null);
     }
 
     public List<Quest> findAll(Player p) {

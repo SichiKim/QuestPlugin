@@ -17,6 +17,8 @@ public class QuestPlugin extends JavaPlugin implements Listener {
     File questDir = new File(this.getDataFolder() + "/quests");
     File interactionDir = new File(this.getDataFolder() + "/interactions");
 
+    public static QuestManager questManager = new QuestManager();
+
     public static QuestPlugin plugin; {
         plugin = this;
     }
@@ -25,7 +27,7 @@ public class QuestPlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         initialize();
 
-        getServer().getPluginManager().registerEvents(new QuestListener(new QuestManager()), this);
+        getServer().getPluginManager().registerEvents(new QuestListener(questManager), this);
         getServer().getPluginManager().registerEvents(new InteractionListener(), this);
         getLogger().info("퀘스트 플러그인이 활성화되었습니다.");
     }

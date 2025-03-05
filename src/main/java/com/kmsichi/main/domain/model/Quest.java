@@ -9,20 +9,24 @@ import java.util.UUID;
 public class Quest {
     private final int id;
     private final java.util.UUID UUID;
+    private final String name;
     private final Map<String, Integer> objective;
     private Map<String, Integer> progress;
     private QuestState status;
     private QuestEventListener eventListener;
+    private String interactionCode;
 
-    public Quest(int id, UUID performer_UUID, Map<String, Integer> objective, QuestState status) {
+    public Quest(int id, UUID performer_UUID, String name, Map<String, Integer> objective, QuestState status, String interactionCode) {
         this.id = id;
         this.UUID = performer_UUID;
+        this.name = name;
         this.objective = objective;
         this.status = status;
         this.progress = new HashMap<>();
         for (String k : objective.keySet()) {
-            progress.put(k, objective.get(k));
+            progress.put(k, 0);
         }
+        this.interactionCode = interactionCode;
     }
 
     public void triggerEvent(Player p, Object eventData) {
@@ -49,6 +53,14 @@ public class Quest {
 
     public QuestState getStatus() {
         return status;
+    }
+
+    public String getInteractionCode() {
+        return interactionCode;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isCompleted() {
