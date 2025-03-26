@@ -1,8 +1,8 @@
 package com.kmsichi.main;
 
 import com.kmsichi.main.controller.InteractionListener;
-import com.kmsichi.main.domain.model.QuestManager;
-import com.kmsichi.main.controller.QuestListener;
+import com.kmsichi.main.service.QuestService;
+import com.kmsichi.main.controller.KillListener;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +17,7 @@ public class QuestPlugin extends JavaPlugin implements Listener {
     File questDir = new File(this.getDataFolder() + "/quests");
     File interactionDir = new File(this.getDataFolder() + "/interactions");
 
-    public static QuestManager questManager = new QuestManager();
+    public static QuestService questService = new QuestService();
 
     public static QuestPlugin plugin; {
         plugin = this;
@@ -27,7 +27,7 @@ public class QuestPlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         initialize();
 
-        getServer().getPluginManager().registerEvents(new QuestListener(questManager), this);
+        getServer().getPluginManager().registerEvents(new KillListener(questService), this);
         getServer().getPluginManager().registerEvents(new InteractionListener(), this);
         getLogger().info("퀘스트 플러그인이 활성화되었습니다.");
     }

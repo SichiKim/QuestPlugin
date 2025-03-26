@@ -1,4 +1,4 @@
-package com.kmsichi.main.domain.model;
+package com.kmsichi.main.domain.model.quest;
 
 public enum QuestState {
     READY,
