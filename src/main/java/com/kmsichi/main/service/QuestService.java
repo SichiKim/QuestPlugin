@@ -5,13 +5,14 @@ import com.kmsichi.main.domain.model.quest.QuestObjective;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class QuestService {
-    private final static Map<UUID, List<Quest>> quests = new HashMap<>();
+    private final static Map<UUID, Set<Quest>> quests = new HashMap<>();
 
     public Optional<Quest> register(Player p, Quest q) {
         UUID uid = p.getUniqueId();
-        quests.computeIfAbsent(uid, k -> new ArrayList<>()).add(q);
+        quests.computeIfAbsent(uid, k -> new HashSet<>()).add(q);
         return Optional.ofNullable(q);
     }
 
@@ -25,18 +26,14 @@ public class QuestService {
                 .filter(q -> q.getId() == id).findFirst();
     }
 
-    public List<Quest> findAll() {
-        List<Quest> tempQuests = new ArrayList<>();
-        for (List<Quest> qs : quests.values()) {
-            tempQuests.addAll(qs);
-        }
-        return tempQuests;
+    public Set<Quest> findAll() {
+        return quests.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
     }
 
-    public List<QuestObjective> getActiveObjectives(Player player) {
-        return quests.getOrDefault(player.getUniqueId(), new ArrayList<>()) // 플레이어의 퀘스트 목록 가져오기
+    public Set<QuestObjective> getActiveObjectives(Player player) {
+        return quests.getOrDefault(player.getUniqueId(), new HashSet<>()) // 플레이어의 퀘스트 목록 가져오기
                 .stream()
                 .flatMap(quest -> quest.getObjectives().stream()) // 각 퀘스트의 목표를 스트림으로 변환
-                .toList();
+                .collect(Collectors.toSet());
     }
 }

@@ -1,16 +1,16 @@
 package com.kmsichi.main.domain.model.quest;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class Quest {
     private final int id;
     private final java.util.UUID UUID;
-    private final List<QuestObjective> objectives;
+    private final Set<QuestObjective> objectives;
     private QuestState status;
-    private String interactionCode;
+    private final String interactionCode;
 
-    public Quest(int id, UUID performer_UUID, List<QuestObjective> objectives, QuestState status, String interactionCode) {
+    public Quest(int id, UUID performer_UUID, Set<QuestObjective> objectives, QuestState status, String interactionCode) {
         this.id = id;
         this.UUID = performer_UUID;
         this.objectives = objectives;
@@ -18,7 +18,7 @@ public class Quest {
         this.interactionCode = interactionCode;
     }
 
-    public List<QuestObjective> getObjectives() {
+    public Set<QuestObjective> getObjectives() {
         return objectives;
     }
 
